@@ -39,7 +39,7 @@ class WCPC_Display_Handler {
             if ( $lowest_price && floatval($lowest_price) < floatval($product->get_regular_price()) ) {
                 $message_format = get_option('wcpc_lowest_price_text', 'Lowest price in the last 30 days: %s');
                 $lowest_price_message = sprintf( $message_format, wc_price($lowest_price) );
-                $price_html .= '<p class="wcpc-lowest-price-message">' . esc_html( $lowest_price_message ) . '</p>';
+                $price_html .= '<p class="wcpc-lowest-price-message">' . $lowest_price_message . '</p>';
             }
         }
         return $price_html;
@@ -64,7 +64,12 @@ class WCPC_Display_Handler {
 
             if ( get_option('wcpc_show_chart', 'yes') === 'yes' ) {
                 global $product;
-                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', [], WCPC_VERSION, true );
+                
+                // Enqueue Chart.js from CDN
+                wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js', [], '3.9.1', true );
+                
+                // Enqueue our chart script
+                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', ['chart-js'], WCPC_VERSION, true );
                 
                 // Pass data to the script
                 $price_history = $this->get_price_history_for_chart($product->get_id());
