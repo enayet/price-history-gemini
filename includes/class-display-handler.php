@@ -1,0 +1,104 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Handles frontend display logic for compliance message and chart.
+ */
+class WCPC_Display_Handler {
+
+    public function __construct() {
+        // Display hooks
+        add_filter( 'woocommerce_get_price_html', [ $this, 'display_lowest_price_message' ], 20, 2 );
+        add_action( 'woocommerce_single_product_summary', [ $this, 'add_chart_canvas' ], 35 );
+
+        // Asset enqueuing
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        
+        // Settings page
+        add_filter( 'woocommerce_get_settings_pages', [ $this, 'add_settings_page' ] );
+    }
+    
+    /**
+     * Display the lowest price in the last 30 days.
+     */
+    public function display_lowest_price_message( $price_html, $product ) {
+        if ( $product->is_on_sale() && get_option('wcpc_show_lowest_price_message', 'yes') === 'yes' ) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'wc_price_history';
+            $product_id = $product->get_id();
+            $thirty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-30 days' ) );
+
+            $lowest_price = $wpdb->get_var( $wpdb->prepare(
+                "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s",
+                $product_id,
+                $thirty_days_ago
+            ) );
+
+            if ( $lowest_price && floatval($lowest_price) < floatval($product->get_regular_price()) ) {
+                $message_format = get_option('wcpc_lowest_price_text', 'Lowest price in the last 30 days: %s');
+                $lowest_price_message = sprintf( $message_format, wc_price($lowest_price) );
+                $price_html .= '<p class="wcpc-lowest-price-message">' . esc_html( $lowest_price_message ) . '</p>';
+            }
+        }
+        return $price_html;
+    }
+
+    /**
+     * Add the canvas element for the chart.
+     */
+    public function add_chart_canvas() {
+        if ( get_option('wcpc_show_chart', 'yes') === 'yes' ) {
+            echo '<div class="wcpc-chart-container"><canvas id="wcpcPriceChart"></canvas></div>';
+        }
+    }
+    
+    /**
+     * Enqueue scripts and styles.
+     */
+    public function enqueue_scripts() {
+        if ( is_product() ) {
+            // Enqueue frontend CSS
+            wp_enqueue_style( 'wcpc-frontend-css', WCPC_PLUGIN_URL . 'assets/css/frontend.css', [], WCPC_VERSION );
+
+            if ( get_option('wcpc_show_chart', 'yes') === 'yes' ) {
+                global $product;
+                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', [], WCPC_VERSION, true );
+                
+                // Pass data to the script
+                $price_history = $this->get_price_history_for_chart($product->get_id());
+                wp_localize_script( 'wcpc-chart-js', 'wcpc_chart_data', [
+                    'labels' => wp_list_pluck($price_history, 'date'),
+                    'data'   => wp_list_pluck($price_history, 'price'),
+                    'label'  => __('Price History', 'wc-price-history-compliance')
+                ]);
+            }
+        }
+    }
+    
+    /**
+     * Get price history data formatted for the chart.
+     */
+    private function get_price_history_for_chart( $product_id ) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'wc_price_history';
+        $sixty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-60 days' ) );
+        
+        $results = $wpdb->get_results( $wpdb->prepare(
+            "SELECT price, DATE_FORMAT(date, '%%b %%d') as date FROM $table_name WHERE product_id = %d AND date >= %s ORDER BY date ASC",
+            $product_id,
+            $sixty_days_ago
+        ) );
+        
+        return $results;
+    }
+    
+    /**
+     * Add settings page to WooCommerce.
+     */
+    public function add_settings_page( $settings ) {
+        $settings[] = include( WCPC_PLUGIN_DIR . 'includes/class-admin-settings.php' );
+        return $settings;
+    }
+}

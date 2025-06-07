@@ -1,0 +1,14 @@
+.wcpc-lowest-price-message {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 8px;
+    clear: both;
+}
+
+.wcpc-chart-container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    clear: both;
+}
