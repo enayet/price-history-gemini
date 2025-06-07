@@ -1,9 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const ctx = document.getElementById('wcpcPriceChart');
+    // Handle both old ID format (for backward compatibility) and new product-specific format
+    let ctx = document.getElementById('wcpcPriceChart');
+    
+    // If the old ID doesn't exist, try to find the product-specific one
+    if (!ctx && typeof wcpc_chart_data !== 'undefined' && wcpc_chart_data.product_id) {
+        ctx = document.getElementById('wcpcPriceChart-' + wcpc_chart_data.product_id);
+    }
 
     if (ctx && typeof wcpc_chart_data !== 'undefined') {
         // Ensure we have data to display
-        if (wcpc_chart_data.data.length === 0) {
+        if (!wcpc_chart_data.data || wcpc_chart_data.data.length === 0) {
             return;
         }
         
