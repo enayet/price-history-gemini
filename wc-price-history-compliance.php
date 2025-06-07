@@ -22,6 +22,13 @@ define( 'WCPC_VERSION', '1.0.0' );
 define( 'WCPC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCPC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
+// Include the install handler immediately (needed for activation hook)
+require_once WCPC_PLUGIN_DIR . 'includes/class-install-handler.php';
+
+// Register activation and deactivation hooks IMMEDIATELY (not in plugins_loaded)
+register_activation_hook( __FILE__, [ 'WCPC_Install_Handler', 'activate' ] );
+register_deactivation_hook( __FILE__, [ 'WCPC_Install_Handler', 'deactivate' ] );
+
 /**
  * The main plugin class.
  */
@@ -54,7 +61,6 @@ final class WC_Price_History_Compliance {
      * Include required files.
      */
     private function includes() {
-        require_once WCPC_PLUGIN_DIR . 'includes/class-install-handler.php';
         require_once WCPC_PLUGIN_DIR . 'includes/class-price-tracker.php';
         require_once WCPC_PLUGIN_DIR . 'includes/class-display-handler.php';
         require_once WCPC_PLUGIN_DIR . 'includes/class-admin-reports.php';
@@ -64,10 +70,6 @@ final class WC_Price_History_Compliance {
      * Initialize hooks.
      */
     private function init_hooks() {
-        // Activation and deactivation hooks
-        register_activation_hook( __FILE__, [ 'WCPC_Install_Handler', 'activate' ] );
-        register_deactivation_hook( __FILE__, [ 'WCPC_Install_Handler', 'deactivate' ] );
-        
         // Initialize classes
         new WCPC_Price_Tracker();
         new WCPC_Display_Handler();
