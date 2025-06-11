@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name:       WooCommerce Price History & Sale Compliance
- * Plugin URI:        https://example.com/
+ * Plugin URI:        https://theweblab.xyz/woocommerce-price-history-sale-compliance
  * Description:       Tracks product price history and displays the lowest price in the last 30 days during a sale to comply with EU law.
  * Version:           1.0.0
- * Author:            (Your Name)
+ * Author:            TheWebLab
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wc-price-history-compliance

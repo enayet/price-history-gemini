@@ -16,7 +16,7 @@ class WCPC_Display_Handler {
         // Asset enqueuing
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
         
-        // Add law tooltip icon to sale prices
+        // Add law tooltip icon to sale prices - only when compliance message is enabled
         add_filter( 'woocommerce_format_sale_price', [ $this, 'add_law_tooltip_to_sale_price' ], 10, 3 );
 
         
@@ -42,14 +42,10 @@ class WCPC_Display_Handler {
 
         // Get custom period (default 30 days)
         $period_days = get_option( 'wcpc_custom_period_days', 30 );
-        $period_start = date( 'Y-m-d H:i:s', strtotime( "-{$period_days} days" ) );
+        $period_start = gmdate( 'Y-m-d H:i:s', strtotime( "-{$period_days} days" ) );
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-        $lowest_price = $wpdb->get_var( $wpdb->prepare(
-            "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s",
-            $product_id,
-            $period_start
-        ) );
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $lowest_price = $wpdb->get_var( $wpdb->prepare( "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s", $product_id, $period_start ) );
 
         if ( $lowest_price && floatval($lowest_price) < floatval($product->get_regular_price()) ) {
             // Get custom message template
@@ -64,9 +60,14 @@ class WCPC_Display_Handler {
 
     
     /**
-     * Add law tooltip icon to sale prices
+     * Add law tooltip icon to sale prices - only when compliance message is enabled
      */
     public function add_law_tooltip_to_sale_price( $price, $regular_price, $sale_price ) {
+        // Check if compliance message is enabled first
+        if ( get_option('wcpc_show_lowest_price_message', 'yes') !== 'yes' ) {
+            return $price;
+        }
+        
         // Only add if tooltip is configured and we're on frontend
         $law_tooltip = get_option( 'wcpc_law_tooltip', '' );
         if ( empty( $law_tooltip ) || is_admin() ) {
@@ -101,7 +102,7 @@ class WCPC_Display_Handler {
                 global $product;
                 
                 // Enqueue Chart.js from CDN
-                wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js', [], '3.9.1', true );
+                wp_enqueue_script( 'chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.min.js', [], '3.9.1', true );
                 
                 // Enqueue our chart script
                 wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', ['chart-js', 'jquery'], WCPC_VERSION, true );
@@ -136,7 +137,7 @@ class WCPC_Display_Handler {
         // Verify nonce
         if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ?? '' ) ), 'wcpc_chart_nonce' ) ) {
             wp_die( 'Security check failed' );
-        }
+        }       
         
         $variation_id = intval( $_POST['variation_id'] ?? 0 );
         
@@ -164,16 +165,12 @@ class WCPC_Display_Handler {
         
         $period_days = get_option( 'wcpc_custom_period_days', 30 );
         $chart_period = max( $period_days * 2, 60 ); // Show 2x the period for better chart, minimum 60 days
-        $period_start = date( 'Y-m-d H:i:s', strtotime( "-{$chart_period} days" ) );        
+        $period_start = gmdate( 'Y-m-d H:i:s', strtotime( "-{$chart_period} days" ) );        
         
         
         // Necessary for custom table operations - no WP API available
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-        $results = $wpdb->get_results( $wpdb->prepare(
-            "SELECT price, DATE_FORMAT(date, '%%b %%d') as date FROM $table_name WHERE product_id = %d AND date >= %s ORDER BY date ASC",
-            $product_id,
-            $period_start
-        ) );
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $results = $wpdb->get_results( $wpdb->prepare( "SELECT price, DATE_FORMAT(date, '%%b %%d') as date FROM $table_name WHERE product_id = %d AND date >= %s ORDER BY date ASC", $product_id, $period_start ) );
         
         // Add the regular price as the first entry if we have price change history
         if ( !empty($results) ) {

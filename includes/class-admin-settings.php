@@ -26,6 +26,7 @@ class WCPC_Admin_Settings extends WC_Settings_Page {
             ],
             [
                 'title'   => esc_html__( 'Message Text', 'wc-price-history-compliance' ),
+                // translators: %s is a placeholder for the price value
                 'desc'    => esc_html__( 'Customize the text. Use %s as a placeholder for the price.', 'wc-price-history-compliance' ),
                 'id'      => 'wcpc_lowest_price_text',
                 'default' => 'Lowest price in the last 30 days: %s',

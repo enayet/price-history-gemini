@@ -59,7 +59,9 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
         $offset = ($current_page - 1) * $per_page;
         
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $search_term = isset($_REQUEST['s']) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : '';        
+        if (isset($_REQUEST['s']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])), 'search_price_history')) {
+            $search_term = sanitize_text_field(wp_unslash($_REQUEST['s']));
+        }        
         
         
         $query = "SELECT * FROM {$this->table_name}";
@@ -75,10 +77,12 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
         $params[] = $per_page;
         $params[] = $offset;
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $this->items = $wpdb->get_results($wpdb->prepare($query, ...$params), ARRAY_A);
         
         $total_items_query = "SELECT COUNT(id) FROM {$this->table_name}";
+        
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching 
         $total_items = $wpdb->get_var($total_items_query);
         
         $this->set_pagination_args([
@@ -112,7 +116,7 @@ class WCPC_Admin_Reports {
         <div class="wrap">
             <h1 class="wp-heading-inline">Price History Report</h1>
             <form method="get">
-                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+                <input type="hidden" name="page" value="<?php echo esc_attr(wp_unslash($_REQUEST['page'])); ?>" />
                 <?php $list_table->search_box('Search by Product ID', 'product_id'); ?>
             </form>
             <?php $list_table->display(); ?>
