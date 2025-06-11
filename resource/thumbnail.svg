@@ -1,0 +1,70 @@
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="80" height="80" rx="8" fill="url(#bgGradient)"/>
+  
+  <!-- Central Icon Container -->
+  <rect x="10" y="10" width="60" height="60" rx="8" fill="rgba(255,255,255,0.95)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  
+  <!-- Chart Icon -->
+  <g>
+    <!-- Chart Background -->
+    <rect x="15" y="40" width="50" height="25" rx="3" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+    
+    <!-- Price Line Chart -->
+    <polyline points="18,58 25,52 32,50 39,55 46,48 53,45 60,50 62,47" 
+              fill="none" stroke="url(#chartGradient)" stroke-width="2"/>
+    
+    <!-- Chart Points -->
+    <circle cx="18" cy="58" r="1.5" fill="#3498db"/>
+    <circle cx="25" cy="52" r="1.5" fill="#3498db"/>
+    <circle cx="32" cy="50" r="1.5" fill="#3498db"/>
+    <circle cx="39" cy="55" r="1.5" fill="#3498db"/>
+    <circle cx="46" cy="48" r="1.5" fill="#3498db"/>
+    <circle cx="53" cy="45" r="1.5" fill="#3498db"/>
+    <circle cx="60" cy="50" r="1.5" fill="#2ecc71"/>
+    <circle cx="62" cy="47" r="1.5" fill="#2ecc71"/>
+  </g>
+  
+  <!-- Price Tag Symbol -->
+  <g>
+    <!-- Price tag shape -->
+    <path d="M 20 15 L 35 15 L 40 20 L 35 25 L 20 25 Z" fill="#e74c3c" stroke="white" stroke-width="1"/>
+    <!-- Tag hole -->
+    <circle cx="25" cy="20" r="2" fill="white"/>
+    
+    <!-- Euro symbol -->
+    <text x="30" y="23" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">€</text>
+  </g>
+  
+  <!-- EU Stars -->
+  <g opacity="0.8">
+    <circle cx="50" cy="18" r="1" fill="#f39c12"/>
+    <circle cx="55" cy="20" r="1" fill="#f39c12"/>
+    <circle cx="58" cy="25" r="1" fill="#f39c12"/>
+    <circle cx="55" cy="30" r="1" fill="#f39c12"/>
+    <circle cx="50" cy="32" r="1" fill="#f39c12"/>
+  </g>
+  
+  <!-- Compliance Check Mark -->
+  <g>
+    <circle cx="25" cy="35" r="8" fill="#27ae60" opacity="0.9"/>
+    <polyline points="20,35 23,38 30,31" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Small "30" indicator -->
+  <rect x="45" y="55" width="12" height="8" rx="2" fill="#34495e"/>
+  <text x="51" y="61" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white" text-anchor="middle">30</text>
+</svg>

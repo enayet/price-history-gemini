@@ -1,0 +1,130 @@
+<svg width="590" height="300" viewBox="0 0 590 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:0.95" />
+    </linearGradient>
+    
+    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="590" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- EU Stars Pattern (subtle background) -->
+  <g opacity="0.1">
+    <circle cx="50" cy="50" r="3" fill="white"/>
+    <circle cx="540" cy="250" r="3" fill="white"/>
+    <circle cx="450" cy="40" r="3" fill="white"/>
+    <circle cx="120" cy="260" r="3" fill="white"/>
+    <circle cx="350" cy="30" r="3" fill="white"/>
+    <circle cx="480" cy="270" r="3" fill="white"/>
+  </g>
+  
+  <!-- Main Content Card -->
+  <rect x="30" y="40" width="530" height="220" rx="15" fill="url(#cardGradient)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  
+  <!-- Left Section - Text Content -->
+  <g>
+    <!-- Main Title -->
+    <text x="50" y="80" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2c3e50">
+      WooCommerce Price 
+    </text>
+    <text x="50" y="110" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2c3e50">
+      History &amp; Sale Compliance
+    </text>
+    
+    <!-- EU Compliance Badge -->
+    <rect x="50" y="130" width="180" height="25" rx="12" fill="#e74c3c"/>
+    <text x="140" y="148" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">
+      EU OMNIBUS DIRECTIVE
+    </text>
+    
+    <!-- Key Features -->
+    <text x="50" y="180" font-family="Arial, sans-serif" font-size="14" fill="#34495e">
+      ✓ Automatic Price Tracking
+    </text>
+    <text x="50" y="200" font-family="Arial, sans-serif" font-size="14" fill="#34495e">
+      ✓ 30-Day Lowest Price Display
+    </text>
+    <text x="50" y="220" font-family="Arial, sans-serif" font-size="14" fill="#34495e">
+      ✓ Professional Price Charts
+    </text>
+    
+    <!-- Price -->
+    <text x="50" y="245" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#27ae60">
+      €49 One-Time • No Subscriptions
+    </text>
+  </g>
+  
+  <!-- Right Section - Visual Elements -->
+  <g>
+    <!-- Phone/Device Mockup -->
+    <rect x="380" y="60" width="160" height="180" rx="20" fill="#34495e" stroke="white" stroke-width="3"/>
+    <rect x="390" y="75" width="140" height="150" rx="8" fill="white"/>
+    
+    <!-- Product Price Display Mockup -->
+    <rect x="400" y="85" width="120" height="30" rx="4" fill="#f8f9fa"/>
+    <text x="410" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#e74c3c">
+      Sale: €899.99
+    </text>
+    
+    <!-- Compliance Message -->
+    <rect x="400" y="120" width="120" height="25" rx="4" fill="#e8f5e8"/>
+    <text x="410" y="130" font-family="Arial, sans-serif" font-size="8" fill="#27ae60">
+      Lowest price in last 30 days:
+    </text>
+    <text x="410" y="140" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#27ae60">
+      €999.99
+    </text>
+    
+    <!-- Price Chart -->
+    <rect x="400" y="155" width="120" height="60" rx="4" fill="#f8f9fa"/>
+    
+    <!-- Chart Lines -->
+    <polyline points="405,200 420,190 435,185 450,195 465,180 480,175 495,185 510,170" 
+              fill="none" stroke="url(#chartGradient)" stroke-width="2"/>
+    
+    <!-- Chart Points -->
+    <circle cx="405" cy="200" r="2" fill="#3498db"/>
+    <circle cx="420" cy="190" r="2" fill="#3498db"/>
+    <circle cx="435" cy="185" r="2" fill="#3498db"/>
+    <circle cx="450" cy="195" r="2" fill="#3498db"/>
+    <circle cx="465" cy="180" r="2" fill="#3498db"/>
+    <circle cx="480" cy="175" r="2" fill="#3498db"/>
+    <circle cx="495" cy="185" r="2" fill="#3498db"/>
+    <circle cx="510" cy="170" r="2" fill="#2ecc71"/>
+    
+    <!-- Chart Label -->
+    <text x="460" y="222" font-family="Arial, sans-serif" font-size="8" fill="#7f8c8d" text-anchor="middle">
+      Price History
+    </text>
+  </g>
+  
+  <!-- Warning Icon and Legal Note -->
+  <g>
+    <!-- Warning Triangle -->
+    <polygon points="320,160 335,185 305,185" fill="#f39c12"/>
+    <text x="320" y="180" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">!</text>
+    
+    <!-- Legal Warning Text -->
+    <text x="320" y="200" font-family="Arial, sans-serif" font-size="10" fill="#f39c12" text-anchor="middle">
+      EU LAW REQUIRES
+    </text>
+    <text x="320" y="215" font-family="Arial, sans-serif" font-size="10" fill="#f39c12" text-anchor="middle">
+      PRICE DISCLOSURE
+    </text>
+  </g>
+  
+  <!-- Bottom Accent -->
+  <rect x="30" y="250" width="530" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+</svg>

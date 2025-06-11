@@ -1,0 +1,56 @@
+Subject: WooCommerce Price History & Sale Compliance - EU Omnibus Directive Solution
+Dear CodeCanyon Review Team,
+I'm submitting "WooCommerce Price History & Sale Compliance," a professional plugin that addresses the EU Omnibus Directive requirements for displaying lowest prices during sales.
+Why This Plugin Matters:
+The EU Omnibus Directive (2019/2161) legally requires online stores to display "the lowest price in the 30 days prior to a discount." Non-compliance can result in fines up to €10,000+. German authorities are already issuing warnings, and French audits began in January 2025.
+Market Analysis:
+
+The basic free WordPress.org plugin has 20,000+ active installs, proving strong demand
+The official WooCommerce extension costs €79/year per site
+Our solution provides premium functionality at €49 one-time, targeting the gap between free and expensive recurring solutions
+
+Technical Highlights:
+
+Full WooCommerce Integration: Hooks into product update events for automatic price tracking
+HPOS Compatible: Declares compatibility with High Performance Order Storage
+Variable Product Support: Separate price tracking for each variation (critical for accurate compliance)
+Security First: Implements nonces, sanitization, prepared statements, and follows WordPress coding standards
+Performance Optimized: Minimal database impact, cached frontend data, AJAX-powered charts
+
+Key Features:
+
+Automatic price change recording
+EU-compliant "lowest price in X days" display
+Optional Amazon-style price history charts
+Admin reports for compliance audits
+Customizable messaging for different markets
+Agency-friendly unlimited site licensing
+
+Code Quality:
+
+Follows WordPress and WooCommerce coding standards
+Comprehensive error handling and security measures
+Extensively documented (includes complete documentation.html)
+Translation ready with proper text domains
+Structured with proper OOP design patterns
+
+Testing Completed:
+
+WordPress 5.8+ through 6.5
+WooCommerce 6.0+ through 8.9
+PHP 7.4 through 8.2
+Tested with popular themes and caching plugins
+WPCS (WordPress Coding Standards) compliant
+
+Target Market:
+
+EU WooCommerce stores (legally required)
+Global stores wanting price transparency
+Agencies managing multiple client stores
+Stores seeking professional compliance solution
+
+This plugin solves a genuine business problem with a professional, technically sound solution. The legal requirement creates sustained demand, while our pricing strategy offers excellent value compared to existing options.
+Thank you for your consideration. I'm available for any questions or clarifications during the review process.
+Best regards,
+[Your Name]
+Note: Complete documentation is included in the package as documentation.html for easy reviewer access.
