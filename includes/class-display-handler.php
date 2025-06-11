@@ -16,6 +16,10 @@ class WCPC_Display_Handler {
         // Asset enqueuing
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
         
+        // AJAX handlers for variation chart data
+        add_action( 'wp_ajax_wcpc_get_variation_chart_data', [ $this, 'ajax_get_variation_chart_data' ] );
+        add_action( 'wp_ajax_nopriv_wcpc_get_variation_chart_data', [ $this, 'ajax_get_variation_chart_data' ] );
+        
         // Settings page
         add_filter( 'woocommerce_get_settings_pages', [ $this, 'add_settings_page' ] );
     }
@@ -69,18 +73,54 @@ class WCPC_Display_Handler {
                 wp_enqueue_script( 'chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js', [], '3.9.1', true );
                 
                 // Enqueue our chart script
-                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', ['chart-js'], WCPC_VERSION, true );
+                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', ['chart-js', 'jquery'], WCPC_VERSION, true );
                 
-                // Pass data to the script
-                $price_history = $this->get_price_history_for_chart($product->get_id());
-                wp_localize_script( 'wcpc-chart-js', 'wcpc_chart_data', [
-                    'labels' => wp_list_pluck($price_history, 'date'),
-                    'data'   => wp_list_pluck($price_history, 'price'),
-                    'label'  => __('Price History', 'wc-price-history-compliance'),
-                    'has_data' => count($price_history) > 1
-                ]);
+                // For variable products, don't load initial data - let JS handle it
+                if ( $product->is_type('variable') ) {
+                    wp_localize_script( 'wcpc-chart-js', 'wcpc_chart_data', [
+                        'ajax_url' => admin_url('admin-ajax.php'),
+                        'nonce' => wp_create_nonce('wcpc_chart_nonce'),
+                        'is_variable' => true,
+                        'product_id' => $product->get_id()
+                    ]);
+                } else {
+                    // For simple products, load data as before
+                    $price_history = $this->get_price_history_for_chart($product->get_id());
+                    wp_localize_script( 'wcpc-chart-js', 'wcpc_chart_data', [
+                        'labels' => wp_list_pluck($price_history, 'date'),
+                        'data'   => wp_list_pluck($price_history, 'price'),
+                        'label'  => __('Price History', 'wc-price-history-compliance'),
+                        'has_data' => count($price_history) >= 1,
+                        'is_variable' => false
+                    ]);
+                }
             }
         }
+    }
+    
+    /**
+     * AJAX handler to get variation chart data.
+     */
+    public function ajax_get_variation_chart_data() {
+        // Verify nonce
+        if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ?? '' ) ), 'wcpc_chart_nonce' ) ) {
+            wp_die( 'Security check failed' );
+        }
+        
+        $variation_id = intval( $_POST['variation_id'] ?? 0 );
+        
+        if ( ! $variation_id ) {
+            wp_send_json_error( 'Invalid variation ID' );
+        }
+        
+        $price_history = $this->get_price_history_for_chart( $variation_id );
+        
+        wp_send_json_success( [
+            'labels' => wp_list_pluck($price_history, 'date'),
+            'data'   => wp_list_pluck($price_history, 'price'),
+            'label'  => __('Price History', 'wc-price-history-compliance'),
+            'has_data' => count($price_history) >= 1
+        ] );
     }
     
     /**
@@ -91,11 +131,31 @@ class WCPC_Display_Handler {
         $table_name = $wpdb->prefix . 'wc_price_history';
         $sixty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-60 days' ) );
         
+        // Necessary for custom table operations - no WP API available
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         $results = $wpdb->get_results( $wpdb->prepare(
             "SELECT price, DATE_FORMAT(date, '%%b %%d') as date FROM $table_name WHERE product_id = %d AND date >= %s ORDER BY date ASC",
             $product_id,
             $sixty_days_ago
         ) );
+        
+        // Add the regular price as the first entry if we have price change history
+        if ( !empty($results) ) {
+            $product = wc_get_product( $product_id );
+            if ( $product && $product->get_regular_price() ) {
+                $regular_price = $product->get_regular_price();
+                $first_recorded_price = $results[0]->price;
+                
+                // Only add regular price if it's different from the first recorded price
+                if ( floatval($regular_price) != floatval($first_recorded_price) ) {
+                    $initial_entry = (object) [
+                        'price' => $regular_price,
+                        'date' => 'Initial'
+                    ];
+                    array_unshift( $results, $initial_entry );
+                }
+            }
+        }
         
         return $results;
     }
