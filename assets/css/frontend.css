@@ -2,7 +2,7 @@
     font-size: 0.9em;
     color: #555;
     margin-top: 8px;
-    clear: both;
+    clear: both;  
 }
 
 .wcpc-chart-container {
@@ -12,3 +12,4 @@
     border-top: 1px solid #eee;
     clear: both;
 }
+

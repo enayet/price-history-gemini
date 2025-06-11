@@ -16,6 +16,10 @@ class WCPC_Display_Handler {
         // Asset enqueuing
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
         
+        // Add law tooltip icon to sale prices
+        add_filter( 'woocommerce_format_sale_price', [ $this, 'add_law_tooltip_to_sale_price' ], 10, 3 );
+
+        
         // AJAX handlers for variation chart data
         add_action( 'wp_ajax_wcpc_get_variation_chart_data', [ $this, 'ajax_get_variation_chart_data' ] );
         add_action( 'wp_ajax_nopriv_wcpc_get_variation_chart_data', [ $this, 'ajax_get_variation_chart_data' ] );
@@ -28,27 +32,54 @@ class WCPC_Display_Handler {
      * Display the lowest price in the last 30 days.
      */
     public function display_lowest_price_message( $price_html, $product ) {
-        if ( $product->is_on_sale() && get_option('wcpc_show_lowest_price_message', 'yes') === 'yes' ) {
-            global $wpdb;
-            $table_name = $wpdb->prefix . 'wc_price_history';
-            $product_id = $product->get_id();
-            $thirty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-30 days' ) );
-
-            $lowest_price = $wpdb->get_var( $wpdb->prepare(
-                "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s",
-                $product_id,
-                $thirty_days_ago
-            ) );
-
-            if ( $lowest_price && floatval($lowest_price) < floatval($product->get_regular_price()) ) {
-                $message_format = get_option('wcpc_lowest_price_text', 'Lowest price in the last 30 days: %s');
-                $lowest_price_message = sprintf( $message_format, wc_price($lowest_price) );
-                $price_html .= '<p class="wcpc-lowest-price-message">' . $lowest_price_message . '</p>';
-            }
+        if ( get_option('wcpc_show_lowest_price_message', 'yes') !== 'yes' ) {
+            return $price_html;
         }
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'wc_price_history';
+        $product_id = $product->get_id();
+
+        // Get custom period (default 30 days)
+        $period_days = get_option( 'wcpc_custom_period_days', 30 );
+        $period_start = date( 'Y-m-d H:i:s', strtotime( "-{$period_days} days" ) );
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+        $lowest_price = $wpdb->get_var( $wpdb->prepare(
+            "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s",
+            $product_id,
+            $period_start
+        ) );
+
+        if ( $lowest_price && floatval($lowest_price) < floatval($product->get_regular_price()) ) {
+            // Get custom message template
+            $message_template = get_option( 'wcpc_lowest_price_text', 'Lowest price in the last 30 days: %s' );
+            $message = sprintf( $message_template, wc_price($lowest_price) );
+
+            $price_html .= '<p class="wcpc-lowest-price-message">' . $message . '</p>';
+        }
+
         return $price_html;
     }
 
+    
+    /**
+     * Add law tooltip icon to sale prices
+     */
+    public function add_law_tooltip_to_sale_price( $price, $regular_price, $sale_price ) {
+        // Only add if tooltip is configured and we're on frontend
+        $law_tooltip = get_option( 'wcpc_law_tooltip', '' );
+        if ( empty( $law_tooltip ) || is_admin() ) {
+            return $price;
+        }
+
+        // Add the helper icon with tooltip
+        $tooltip_icon = '<span class="wcpc-law-tooltip" title="' . esc_attr( $law_tooltip ) . '">ℹ️</span>';
+
+        // Add icon after the sale price
+        return $price . ' ' . $tooltip_icon;
+    }    
+    
     /**
      * Add the canvas element for the chart.
      */
@@ -89,7 +120,7 @@ class WCPC_Display_Handler {
                     wp_localize_script( 'wcpc-chart-js', 'wcpc_chart_data', [
                         'labels' => wp_list_pluck($price_history, 'date'),
                         'data'   => wp_list_pluck($price_history, 'price'),
-                        'label'  => __('Price History', 'wc-price-history-compliance'),
+                        'label'  => esc_html__('Price History', 'wc-price-history-compliance'),
                         'has_data' => count($price_history) >= 1,
                         'is_variable' => false
                     ]);
@@ -118,7 +149,7 @@ class WCPC_Display_Handler {
         wp_send_json_success( [
             'labels' => wp_list_pluck($price_history, 'date'),
             'data'   => wp_list_pluck($price_history, 'price'),
-            'label'  => __('Price History', 'wc-price-history-compliance'),
+            'label'  => esc_html__('Price History', 'wc-price-history-compliance'),
             'has_data' => count($price_history) >= 1
         ] );
     }
@@ -129,14 +160,19 @@ class WCPC_Display_Handler {
     private function get_price_history_for_chart( $product_id ) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'wc_price_history';
-        $sixty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-60 days' ) );
+        //$sixty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-60 days' ) );
+        
+        $period_days = get_option( 'wcpc_custom_period_days', 30 );
+        $chart_period = max( $period_days * 2, 60 ); // Show 2x the period for better chart, minimum 60 days
+        $period_start = date( 'Y-m-d H:i:s', strtotime( "-{$chart_period} days" ) );        
+        
         
         // Necessary for custom table operations - no WP API available
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         $results = $wpdb->get_results( $wpdb->prepare(
             "SELECT price, DATE_FORMAT(date, '%%b %%d') as date FROM $table_name WHERE product_id = %d AND date >= %s ORDER BY date ASC",
             $product_id,
-            $sixty_days_ago
+            $period_start
         ) );
         
         // Add the regular price as the first entry if we have price change history

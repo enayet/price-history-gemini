@@ -36,6 +36,7 @@ class WCPC_Price_Tracker {
         $current_price = $product->get_price();
 
         // Get the last recorded price
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         $last_recorded_price = $wpdb->get_var( $wpdb->prepare(
             "SELECT price FROM {$this->table_name} WHERE product_id = %d ORDER BY date DESC LIMIT 1",
             $id_to_track

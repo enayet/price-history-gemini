@@ -57,8 +57,10 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
         
         $current_page = $this->get_pagenum();
         $offset = ($current_page - 1) * $per_page;
-
-        $search_term = isset($_REQUEST['s']) ? sanitize_text_field($_REQUEST['s']) : '';
+        
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $search_term = isset($_REQUEST['s']) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : '';        
+        
         
         $query = "SELECT * FROM {$this->table_name}";
         $params = [];
@@ -73,6 +75,7 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
         $params[] = $per_page;
         $params[] = $offset;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         $this->items = $wpdb->get_results($wpdb->prepare($query, ...$params), ARRAY_A);
         
         $total_items_query = "SELECT COUNT(id) FROM {$this->table_name}";
