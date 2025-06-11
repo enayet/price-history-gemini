@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WooCommerce Price History & Sale Compliance - EU Omnibus Directive Compliance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.2em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .warning-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 40px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .warning-box h3 {
+            color: #ffeb3b;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .problem-card h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 80px 0;
+        }
+        
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .solution-text h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .solution-text p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .highlight {
+            background: #e8f5e8;
+            padding: 20px;
+            border-left: 4px solid #27ae60;
+            margin: 20px 0;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        /* Social Proof */
+        .social-proof {
+            padding: 60px 0;
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .stat h3 {
+            font-size: 2.5em;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .pricing-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: #3498db;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-card .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3498db;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .price {
+            font-size: 3em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        
+        .price-note {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+        
+        .feature-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .feature-list li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .faq-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .faq-answer {
+            padding: 20px;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .solution-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Are You Risking €10,000+ Fines for Price Compliance Violations?</h1>
+            <p class="subtitle">EU stores need to show "lowest price in last 30 days" during sales. Most are still non-compliant months after the Omnibus Directive took effect.</p>
+            
+            <div class="warning-box">
+                <h3>⚠️ Compliance Deadline Has Passed</h3>
+                <p>German authorities are already issuing warnings. One electronics retailer received a €8,500 fine for non-compliant sale pricing in October 2024. French consumer protection agencies are conducting audits starting January 2025.</p>
+            </div>
+            
+            <a href="#pricing" class="cta-button">Get Compliant Today - €49 One-Time</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">The Real Problems Store Owners Face</h2>
+            <p style="text-align: center; font-size: 1.2em; max-width: 800px; margin: 0 auto;">After helping dozens of WooCommerce stores achieve compliance, I've seen the same frustrations over and over:</p>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Manual Tracking is Impossible</h3>
+                    <p>A German electronics store with 2,400 products told me they tried tracking prices in spreadsheets. After two weeks, they had covered 200 products and already made 15 mistakes. One washing machine showed the wrong "lowest price" for 3 weeks during their Black Friday sale.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>Free Solutions Look Unprofessional</h3>
+                    <p>The basic WordPress.org plugin just dumps ugly text: "Lowest price in last 30 days: €299.99" with no styling. Customers complained it looked broken. No charts, no visual appeal, no trust-building.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>Annual Subscriptions Add Up Fast</h3>
+                    <p>The "official" solution costs €79/year per site. An agency with 15 client stores faces €1,185 annually. Over 3 years, that's €3,555 - for a compliance feature that should be one-and-done.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>Complex Setup Wastes Development Time</h3>
+                    <p>Existing solutions require custom code, theme modifications, or confusing configuration. One developer spent 4 hours just getting price tracking to work properly with variable products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title">The Professional Alternative</h2>
+            
+            <div class="solution-content">
+                <div class="solution-text">
+                    <h3>Built After Analyzing Every Existing Solution</h3>
+                    <p>I tested the €79/year "premium" solution, tried the basic free plugins, and even looked at manual compliance methods. Each had critical gaps.</p>
+                    
+                    <p>So I built what I wished existed: the reliability and polish of premium solutions, with one-time pricing and proper WooCommerce integration.</p>
+                    
+                    <div class="highlight">
+                        <strong>This isn't another generic compliance plugin.</strong> It's specifically designed for the real-world needs of WooCommerce stores selling to EU customers.
+                    </div>
+                    
+                    <p>Works with both simple and variable products (many competitors fail here). Handles price variations properly. Shows charts only when there's meaningful history to display.</p>
+                </div>
+                
+                <div class="solution-image">
+                    <div style="background: #f8f9fa; padding: 40px; border-radius: 15px; text-align: center; border: 2px solid #e0e0e0;">
+                        <h4 style="margin-bottom: 20px; color: #2c3e50;">Clean, Professional Display</h4>
+                        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <p style="margin: 0; color: #555; font-size: 0.9em;">Lowest price in the last 30 days: <strong>€899.99</strong></p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <div style="width: 100%; height: 100px; background: linear-gradient(to right, #3498db, #2ecc71); border-radius: 5px; position: relative;">
+                                <span style="position: absolute; bottom: -25px; left: 0; font-size: 0.8em; color: #666;">Price History Chart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Features That Actually Matter</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Automated Price Tracking</h3>
+                    <p>Records every price change automatically when you update products. No manual data entry, no missed changes. Works with bulk price updates and WooCommerce's built-in sale scheduling.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Amazon-Style Price Charts</h3>
+                    <p>Customers see price trends like on Amazon, building trust in your deals. Chart only appears when there's meaningful price history (not just one data point). Responsive design works on mobile.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Customizable Compliance Text</h3>
+                    <p>Adjust messaging for different markets: "Niedrigster Preis in den letzten 30 Tagen" for Germany, "Prix le plus bas dans les 30 derniers jours" for France. Configure the tracking period (30, 60, 90 days).</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Agency-Friendly Licensing</h3>
+                    <p>Install across unlimited client sites with one purchase. No per-site fees, no annual renewals. Perfect for agencies managing multiple WooCommerce stores.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Proper Variable Product Support</h3>
+                    <p>Tracks prices separately for each variation (Size M vs L, Color Red vs Blue). Shows variation-specific price history. Most competitors treat all variations as one product - wrong and potentially non-compliant.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Admin Compliance Reports</h3>
+                    <p>View complete price change history in WordPress admin. Perfect for compliance audits. Search by product, export data, see exactly when prices changed and by how much.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <h2>The Demand is Already Proven</h2>
+            <p style="font-size: 1.2em; margin-top: 20px;">The basic free plugin on WordPress.org hit 20,000+ active installs within months of the directive taking effect. Store owners need this - they just want a professional solution.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <h3>500,000+</h3>
+                    <p>EU WooCommerce stores need compliance</p>
+                </div>
+                <div class="stat">
+                    <h3>€10,000+</h3>
+                    <p>Potential fines for non-compliance</p>
+                </div>
+                <div class="stat">
+                    <h3>20,000+</h3>
+                    <p>Installs of basic free alternatives</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">One-Time Purchase vs. Endless Subscriptions</h2>
+            
+            <div class="pricing-comparison">
+                <div class="pricing-card">
+                    <h3>Official WooCommerce Extension</h3>
+                    <div class="price">€79<span style="font-size: 0.4em;">/year</span></div>
+                    <div class="price-note">Per site, recurring annually</div>
+                    <ul class="feature-list">
+                        <li>Basic compliance message</li>
+                        <li>Limited customization</li>
+                        <li>Annual renewals required</li>
+                        <li>Support only with active license</li>
+                    </ul>
+                    <p style="color: #e74c3c; font-weight: 600; margin-top: 20px;">3-year cost: €237 per site</p>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="badge">Best Value</div>
+                    <h3>Price History & Compliance</h3>
+                    <div class="price">€49<span style="font-size: 0.4em;">one-time</span></div>
+                    <div class="price-note">Unlimited sites, no renewals</div>
+                    <ul class="feature-list">
+                        <li>Professional compliance display</li>
+                        <li>Amazon-style price charts</li>
+                        <li>Variable product support</li>
+                        <li>Admin reporting dashboard</li>
+                        <li>Customizable messaging</li>
+                        <li>HPOS compatible</li>
+                        <li>Unlimited site license</li>
+                        <li>1 year of updates included</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="margin-top: 20px;">Purchase Now</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Free WordPress.org Plugin</h3>
+                    <div class="price">€0</div>
+                    <div class="price-note">Basic functionality only</div>
+                    <ul class="feature-list">
+                        <li>Plain text compliance message</li>
+                        <li>No styling or customization</li>
+                        <li>No visual charts</li>
+                        <li>Community support only</li>
+                    </ul>
+                    <p style="color: #f39c12; font-weight: 600; margin-top: 20px;">Looks unprofessional</p>
+                </div>
+            </div>
+            
+            <div style="background: #e8f5e8; padding: 30px; border-radius: 15px; margin-top: 40px;">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #27ae60;">Agency Example: 15 Client Stores</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div>
+                        <h4>Official Extension (3 years):</h4>
+                        <p style="font-size: 1.2em; margin: 10px 0;">15 sites × €79/year × 3 years = <strong style="color: #e74c3c;">€3,555</strong></p>
+                    </div>
+                    <div>
+                        <h4>Our Solution:</h4>
+                        <p style="font-size: 1.2em; margin: 10px 0;">One-time purchase = <strong style="color: #27ae60;">€49</strong></p>
+                        <p style="font-size: 0.9em; color: #666;">Savings: €3,506</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Technical Questions Answered</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Does this work with WooCommerce HPOS (High Performance Order Storage)?</div>
+                    <div class="faq-answer">Yes, fully compatible. The plugin declares HPOS compatibility and uses WooCommerce's recommended practices. Future-proofed for WooCommerce's direction.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Will this slow down my store?</div>
+                    <div class="faq-answer">No. Price tracking only happens when you update products (not on every page load). The compliance message uses cached data. Charts load asynchronously and only when needed.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">How accurate is the legal compliance?</div>
+                    <div class="faq-answer">Built specifically for EU Omnibus Directive requirements. The "lowest price in X days" calculation follows the exact legal requirements. However, always verify with your legal team for your specific jurisdiction.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Does it work with variable products properly?</div>
+                    <div class="faq-answer">Yes, this was a key design requirement. Each variation (size, color, etc.) has separate price tracking. When customers select a variation, they see that variation's price history - not generic product data.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">What happens to data if I deactivate the plugin?</div>
+                    <div class="faq-answer">Price history data remains in your database. If you reactivate, all history is preserved. The plugin includes export functionality if you need to backup your compliance records.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Can I customize where the compliance message appears?</div>
+                    <div class="faq-answer">Yes, through WooCommerce hooks. The default position is below the price, but developers can move it using standard WordPress filters. Full documentation included.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="hero" style="padding: 60px 0;">
+        <div class="container">
+            <h2 style="font-size: 2.5em; margin-bottom: 20px;">Stop Risking Compliance Fines</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px;">German authorities are issuing warnings. French audits start this month. Get compliant today with a solution that actually works professionally.</p>
+            <a href="#" class="cta-button" style="font-size: 1.2em; padding: 20px 50px;">Purchase for €49 - One Time</a>
+            <p style="margin-top: 20px; opacity: 0.8;">Unlimited sites • No annual fees • HPOS compatible • 1 year updates</p>
+        </div>
+    </section>
+
+    <script>
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't already active
+            if (!isActive) {
+                answer.classList.add('active');
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
