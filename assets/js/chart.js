@@ -34,6 +34,8 @@ jQuery(document).ready(function($) {
                         }]
                     },
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Allow custom sizing
                         plugins: {
                             legend: {
                                 display: false
@@ -47,6 +49,13 @@ jQuery(document).ready(function($) {
                                         return '$' + value;
                                     }
                                 }
+                            }
+                        },
+                        // Ensure the chart doesn't get too large
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
                             }
                         }
                     }

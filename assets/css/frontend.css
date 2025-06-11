@@ -11,5 +11,12 @@
     padding-top: 20px;
     border-top: 1px solid #eee;
     clear: both;
+    max-width: 400px; /* Constrain maximum width */
+    width: 100%;      /* Allow it to be responsive below 400px */
 }
 
+.wcpc-chart-container canvas {
+    max-height: 250px; /* Prevent the chart from being too tall */
+    width: 100% !important; /* Make it responsive */
+    height: auto !important; /* Maintain aspect ratio */
+}
