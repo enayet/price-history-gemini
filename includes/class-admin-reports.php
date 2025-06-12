@@ -57,10 +57,12 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
         
         $current_page = $this->get_pagenum();
         $offset = ($current_page - 1) * $per_page;
+        $search_term = "";
         
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        if (isset($_REQUEST['s']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])), 'search_price_history')) {
-            $search_term = sanitize_text_field(wp_unslash($_REQUEST['s']));
+        if (isset($_GET['s'])) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $search_term = sanitize_text_field(wp_unslash($_GET['s']));
         }        
         
         
@@ -116,9 +118,17 @@ class WCPC_Admin_Reports {
         <div class="wrap">
             <h1 class="wp-heading-inline">Price History Report</h1>
             <form method="get">
-                <input type="hidden" name="page" value="<?php echo esc_attr(wp_unslash($_REQUEST['page'])); ?>" />
-                <?php $list_table->search_box('Search by Product ID', 'product_id'); ?>
-            </form>
+                <?php
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+                ?>
+                <input type="hidden" name="page" value="<?php echo esc_attr($page); ?>" />
+
+                <?php
+                $list_table->search_box('Search by Product ID', 'product_id');
+                ?>
+            </form>                   
+            
             <?php $list_table->display(); ?>
         </div>
         <?php
