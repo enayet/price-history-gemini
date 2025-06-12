@@ -1,3 +1,6 @@
+(function($) {
+"use strict"; 
+
 jQuery(document).ready(function($) {
     const ctx = document.getElementById('wcpcPriceChart');
     let chartInstance = null;
@@ -129,3 +132,6 @@ jQuery(document).ready(function($) {
         if (typeof wcpc_chart_data === 'undefined') console.log('wcpc_chart_data not defined');
     }
 });
+    
+    
+})(jQuery);     

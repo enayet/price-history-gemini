@@ -35,8 +35,8 @@ class WCPC_Admin_Settings extends WC_Settings_Page {
             ],
             
             [
-                'title'   => __( 'Custom Period (Days)', 'wc-price-history-compliance' ),
-                'desc'    => __( 'Number of days to track for lowest price (default: 30)', 'wc-price-history-compliance' ),
+                'title'   => esc_html__( 'Custom Period (Days)', 'wc-price-history-compliance' ),
+                'desc'    => esc_html__( 'Number of days to track for lowest price (default: 30)', 'wc-price-history-compliance' ),
                 'id'      => 'wcpc_custom_period_days',
                 'default' => 30,
                 'type'    => 'number',
@@ -48,8 +48,8 @@ class WCPC_Admin_Settings extends WC_Settings_Page {
                 'css'     => 'width: 100px;',
             ],
             [
-                'title'   => __( 'Law/Compliance Tooltip', 'wc-price-history-compliance' ),
-                'desc'    => __( 'Optional: Add legal/compliance information to show as tooltip next to sale prices. Leave empty to disable.', 'wc-price-history-compliance' ),
+                'title'   => esc_html__( 'Law/Compliance Tooltip', 'wc-price-history-compliance' ),
+                'desc'    => esc_html__( 'Optional: Add legal/compliance information to show as tooltip next to sale prices. Leave empty to disable.', 'wc-price-history-compliance' ),
                 'id'      => 'wcpc_law_tooltip',
                 'default' => '',
                 'type'    => 'textarea',

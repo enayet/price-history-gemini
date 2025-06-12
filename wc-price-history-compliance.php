@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define constants
-define( 'WCPC_VERSION', '1.0.0' );
+define( 'WCPC_VERSION', '1.0.4' );
 define( 'WCPC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCPC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -32,7 +32,7 @@ register_deactivation_hook( __FILE__, [ 'WCPC_Install_Handler', 'deactivate' ] )
 /**
  * The main plugin class.
  */
-final class WC_Price_History_Compliance {
+final class WCPC_Price_History_Compliance {
 
     /**
      * The single instance of the class.
@@ -106,7 +106,7 @@ add_action( 'before_woocommerce_init', function() {
 function wcpc_run_plugin() {
     // Ensure WooCommerce is active
     if ( class_exists( 'WooCommerce' ) ) {
-         WC_Price_History_Compliance::instance();
+         WCPC_Price_History_Compliance::instance();
     } else {
         add_action('admin_notices', function() {
             echo '<div class="error"><p><strong>WooCommerce Price History & Sale Compliance</strong> requires WooCommerce to be installed and active.</p></div>';
