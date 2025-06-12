@@ -44,7 +44,8 @@ class WCPC_Display_Handler {
         $period_days = get_option( 'wcpc_custom_period_days', 30 );
         $period_start = gmdate( 'Y-m-d H:i:s', strtotime( "-{$period_days} days" ) );
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // Necessary for custom table operations - no WP API available
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $lowest_price = $wpdb->get_var( $wpdb->prepare( "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s", $product_id, $period_start ) );
 
         if ( $lowest_price && floatval($lowest_price) < floatval($product->get_regular_price()) ) {
@@ -169,7 +170,7 @@ class WCPC_Display_Handler {
         
         
         // Necessary for custom table operations - no WP API available
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $results = $wpdb->get_results( $wpdb->prepare( "SELECT price, DATE_FORMAT(date, '%%b %%d') as date FROM $table_name WHERE product_id = %d AND date >= %s ORDER BY date ASC", $product_id, $period_start ) );
         
         // Add the regular price as the first entry if we have price change history

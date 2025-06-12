@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define constants
-define( 'WCPC_VERSION', '1.0.3' );
+define( 'WCPC_VERSION', '1.0.0' );
 define( 'WCPC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCPC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -74,8 +74,22 @@ final class WC_Price_History_Compliance {
         new WCPC_Price_Tracker();
         new WCPC_Display_Handler();
         new WCPC_Admin_Reports();
+        
+        add_action( 'init', [ $this, 'load_textdomain' ] );
     }
+    
+    public function load_textdomain() {
+        load_plugin_textdomain( 
+            'wc-price-history-compliance', 
+            false, 
+            dirname( plugin_basename( __FILE__ ) ) . '/languages/' 
+        );
+    }
+    
+    
 }
+
+
 
 /**
  * Declare HPOS compatibility.

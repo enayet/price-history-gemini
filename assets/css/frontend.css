@@ -20,3 +20,17 @@
     width: 100% !important; /* Make it responsive */
     height: auto !important; /* Maintain aspect ratio */
 }
+
+
+.wcpc-law-tooltip img.emoji {
+  display: inline !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: 15px !important;
+  width: 15px !important;
+  margin: 0 0.07em !important;
+  vertical-align: 10px !important;
+  background: none !important;
+  padding: 0 !important;
+  border-radius: 100%;
+}
