@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define constants
-define( 'WCPC_VERSION', '1.0.4' );
+define( 'WCPC_VERSION', '1.0.0' );
 define( 'WCPC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCPC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

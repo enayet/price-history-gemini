@@ -24,6 +24,12 @@ class WCPC_Display_Handler {
         add_action( 'wp_ajax_wcpc_get_variation_chart_data', [ $this, 'ajax_get_variation_chart_data' ] );
         add_action( 'wp_ajax_nopriv_wcpc_get_variation_chart_data', [ $this, 'ajax_get_variation_chart_data' ] );
         
+        add_action( 'wp_ajax_wcpc_get_variation_compliance_data', [ $this, 'ajax_get_variation_compliance_data' ] );
+        add_action( 'wp_ajax_nopriv_wcpc_get_variation_compliance_data', [ $this, 'ajax_get_variation_compliance_data' ] );        
+        
+        
+        add_action( 'woocommerce_single_product_summary', [ $this, 'force_display_variable_compliance_info' ], 10 );
+        
         // Settings page
         add_filter( 'woocommerce_get_settings_pages', [ $this, 'add_settings_page' ] );
     }
@@ -201,4 +207,133 @@ class WCPC_Display_Handler {
         $settings[] = include( WCPC_PLUGIN_DIR . 'includes/class-admin-settings.php' );
         return $settings;
     }
+    
+    
+    /**
+     * Force display compliance info for variable products when all variations have same price
+     */
+    public function force_display_variable_compliance_info() {
+        if ( get_option('wcpc_show_lowest_price_message', 'yes') !== 'yes' ) {
+            return;
+        }
+
+        global $product;
+
+        if ( ! $product || ! $product->is_type('variable') ) {
+            return;
+        }
+
+        // Get all variation prices
+        $available_variations = $product->get_available_variations();
+        $prices = wp_list_pluck($available_variations, 'display_price');
+
+        // If all variations have same price, WooCommerce may hide the price block
+        if ( count(array_unique($prices)) === 1 ) {
+            // Output a placeholder div that JavaScript will populate
+            echo '<div id="wcpc-forced-compliance-container" style="display:none;"></div>';
+
+            // Add JavaScript to handle variation selection
+            ?>
+            <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                var $container = $('#wcpc-forced-compliance-container');
+                var $form = $('form.variations_form');
+
+                // Function to get compliance data for a variation
+                function getComplianceData(variationId) {
+                    return $.ajax({
+                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        type: 'POST',
+                        data: {
+                            action: 'wcpc_get_variation_compliance_data',
+                            variation_id: variationId,
+                            nonce: '<?php echo wp_create_nonce('wcpc_compliance_nonce'); ?>'
+                        }
+                    });
+                }
+
+                // Handle variation selection
+                $form.on('found_variation', function(event, variation) {
+                    if (variation && variation.variation_id) {
+                        getComplianceData(variation.variation_id).done(function(response) {
+                            if (response.success && response.data.has_compliance) {
+                                $container.html(response.data.html).show();
+                            } else {
+                                $container.hide().empty();
+                            }
+                        });
+                    }
+                });
+
+                // Handle variation reset/clear
+                $form.on('reset_data', function() {
+                    $container.hide().empty();
+                });
+            });
+            </script>
+            <?php
+        }
+    }
+
+    // ADD this new AJAX handler method to the class:
+    /**
+     * AJAX handler to get variation compliance data
+     */
+    public function ajax_get_variation_compliance_data() {
+        // Verify nonce
+        if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ?? '' ) ), 'wcpc_compliance_nonce' ) ) {
+            wp_die( 'Security check failed' );
+        }
+
+        $variation_id = intval( $_POST['variation_id'] ?? 0 );
+
+        if ( ! $variation_id ) {
+            wp_send_json_error( 'Invalid variation ID' );
+        }
+
+        $variation = wc_get_product( $variation_id );
+        if ( ! $variation ) {
+            wp_send_json_error( 'Variation not found' );
+        }
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'wc_price_history';
+
+        // Get custom period (default 30 days)
+        $period_days = get_option( 'wcpc_custom_period_days', 30 );
+        $period_start = gmdate( 'Y-m-d H:i:s', strtotime( "-{$period_days} days" ) );
+
+        // Check for compliance data
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $lowest_price = $wpdb->get_var( $wpdb->prepare( "SELECT MIN(price) FROM $table_name WHERE product_id = %d AND date >= %s", $variation_id, $period_start ) );
+
+        $has_compliance = false;
+        $html = '';
+
+        if ( $lowest_price && floatval($lowest_price) < floatval($variation->get_regular_price()) ) {
+            $has_compliance = true;
+
+            // Get custom message template
+            $message_template = get_option( 'wcpc_lowest_price_text', 'Lowest price in the last 30 days: %s' );
+            $message = sprintf( $message_template, wc_price($lowest_price) );
+
+            $html = '<div class="wcpc-forced-compliance-info">';
+            $html .= '<p class="wcpc-lowest-price-message">' . $message . '</p>';
+
+            // Add tooltip if configured
+//            $law_tooltip = get_option( 'wcpc_law_tooltip', '' );
+//            if ( ! empty( $law_tooltip ) ) {
+//                $html .= ' <span class="wcpc-law-tooltip" title="' . esc_attr( $law_tooltip ) . '">ℹ️</span>';
+//            }
+
+            $html .= '</div>';
+        }
+
+        wp_send_json_success( [
+            'has_compliance' => $has_compliance,
+            'html' => $html
+        ] );
+    }    
+    
+    
 }
