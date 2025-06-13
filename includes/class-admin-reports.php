@@ -1,7 +1,15 @@
 <?php
+/**
+ * This file is part of WooCommerce Price History & Sale Compliance plugin.
+ *
+ * @package WCPC
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+    exit; // Exit if accessed directly.
 }
+
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -16,17 +24,17 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'wc_price_history';
         parent::__construct([
-            'singular' => 'Price Record',
-            'plural'   => 'Price Records',
+            'singular' => esc_html__('Price Record', 'wc-price-history-compliance'),
+            'plural'   => esc_html__('Price Records', 'wc-price-history-compliance'),
             'ajax'     => false
         ]);
     }
     
     public function get_columns() {
         return [
-            'product_name' => 'Product',
-            'price'        => 'Price',
-            'date'         => 'Date Recorded'
+            'product_name' => esc_html__('Product', 'wc-price-history-compliance'),
+            'price'        => esc_html__('Price', 'wc-price-history-compliance'),
+            'date'         => esc_html__('Date Recorded', 'wc-price-history-compliance')
         ];
     }
     
@@ -44,7 +52,12 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
             $edit_link = get_edit_post_link($item['product_id']);
             return sprintf('<a href="%s">%s</a>', esc_url($edit_link), $product->get_formatted_name());
         }
-        return 'Product not found (ID: ' . $item['product_id'] . ')';
+        
+        return sprintf(
+            esc_html__('Product not found (ID: %d)', 'wc-price-history-compliance'), $item['product_id']
+        );
+        
+        
     }
 
     public function prepare_items() {
@@ -103,8 +116,8 @@ class WCPC_Admin_Reports {
     public function add_admin_menu() {
         add_submenu_page(
             'woocommerce',
-            'Price History Report',
-            'Price History',
+            esc_html__('Price History Report', 'wc-price-history-compliance'),
+            esc_html__('Price History', 'wc-price-history-compliance'),
             'manage_woocommerce',
             'wcpc-price-history',
             [$this, 'render_reports_page']
@@ -116,7 +129,7 @@ class WCPC_Admin_Reports {
         $list_table->prepare_items();
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline">Price History Report</h1>
+            <h1 class="wp-heading-inline"><?php echo esc_html__('Price History Report', 'wc-price-history-compliance'); ?></h1>
             <form method="get">
                 <?php
                 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -125,7 +138,9 @@ class WCPC_Admin_Reports {
                 <input type="hidden" name="page" value="<?php echo esc_attr($page); ?>" />
 
                 <?php
-                $list_table->search_box('Search by Product ID', 'product_id');
+            
+                $list_table->search_box(esc_html__('Search by Product ID', 'wc-price-history-compliance'), 'product_id');
+        
                 ?>
             </form>                   
             

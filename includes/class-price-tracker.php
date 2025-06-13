@@ -1,6 +1,12 @@
 <?php
+/**
+ * This file is part of WooCommerce Price History & Sale Compliance plugin.
+ *
+ * @package WCPC
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+    exit; // Exit if accessed directly.
 }
 
 /**

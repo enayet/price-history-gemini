@@ -1,6 +1,12 @@
 <?php
+/**
+ * This file is part of WooCommerce Price History & Sale Compliance plugin.
+ *
+ * @package WCPC
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+    exit; // Exit if accessed directly.
 }
 
 /**
@@ -109,10 +115,10 @@ class WCPC_Display_Handler {
                 global $product;
                 
                 // Enqueue Chart.js from CDN
-                wp_enqueue_script( 'chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.min.js', [], '3.9.1', true );
+                wp_enqueue_script( 'wcpc-chartjs-org', WCPC_PLUGIN_URL . 'assets/js/chart.min.js', [], '3.9.1', true );
                 
                 // Enqueue our chart script
-                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', ['chart-js', 'jquery'], WCPC_VERSION, true );
+                wp_enqueue_script( 'wcpc-chart-js', WCPC_PLUGIN_URL . 'assets/js/chart.js', ['wcpc-chartjs-org', 'jquery'], WCPC_VERSION, true );
                 
                 // For variable products, don't load initial data - let JS handle it
                 if ( $product->is_type('variable') ) {

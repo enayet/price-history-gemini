@@ -109,7 +109,11 @@ function wcpc_run_plugin() {
          WCPC_Price_History_Compliance::instance();
     } else {
         add_action('admin_notices', function() {
-            echo '<div class="error"><p><strong>WooCommerce Price History & Sale Compliance</strong> requires WooCommerce to be installed and active.</p></div>';
+            echo '<div class="error"><p><strong>' . 
+                 esc_html__('WooCommerce Price History & Sale Compliance', 'wc-price-history-compliance') . 
+                 '</strong> ' . 
+                 esc_html__('requires WooCommerce to be installed and active.', 'wc-price-history-compliance') . 
+                 '</p></div>';
         });
     }
 }
