@@ -112,7 +112,26 @@ class WCPC_Display_Handler {
             wp_enqueue_style( 'wcpc-frontend-css', WCPC_PLUGIN_URL . 'assets/css/frontend.css', [], WCPC_VERSION );
 
             if ( get_option('wcpc_show_chart', 'yes') === 'yes' ) {
-                global $product;
+                // Get the global product object safely
+                global $woocommerce, $product;
+                
+                // Make sure we have a valid product object
+                if ( ! is_object( $product ) ) {
+                    $product = wc_get_product( get_the_ID() );
+                }
+                
+                // If we still don't have a product, try to get it from the global post
+                if ( ! is_object( $product ) ) {
+                    global $post;
+                    if ( isset( $post->ID ) ) {
+                        $product = wc_get_product( $post->ID );
+                    }
+                }
+                
+                // Only proceed if we have a valid product object
+                if ( ! is_object( $product ) || ! method_exists( $product, 'is_type' ) ) {
+                    return;
+                }
                 
                 // Enqueue Chart.js from CDN
                 wp_enqueue_script( 'wcpc-chartjs-org', WCPC_PLUGIN_URL . 'assets/js/chart.min.js', [], '3.9.1', true );

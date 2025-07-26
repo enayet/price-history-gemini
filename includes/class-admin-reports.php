@@ -52,12 +52,9 @@ class WCPC_Price_History_List_Table extends WP_List_Table {
             $edit_link = get_edit_post_link($item['product_id']);
             return sprintf('<a href="%s">%s</a>', esc_url($edit_link), $product->get_formatted_name());
         }
-        
-        return sprintf(
-            esc_html__('Product not found (ID: %d)', 'wc-price-history-compliance'), $item['product_id']
-        );
-        
-        
+        // translators: %s is a placeholder for the product ID
+        return sprintf( esc_html__('Product not found (ID: %d)', 'wc-price-history-compliance'), $item['product_id']);
+    
     }
 
     public function prepare_items() {

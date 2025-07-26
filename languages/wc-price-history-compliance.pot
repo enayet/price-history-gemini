@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Price History & Sale Compliance 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-price-history-compliance\n"
-"POT-Creation-Date: 2025-06-11 10:33:49+00:00\n"
+"POT-Creation-Date: 2025-06-13 06:15:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,55 +12,96 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: includes/class-admin-settings.php:9 includes/class-display-handler.php:125
-#: includes/class-display-handler.php:154
+#: includes/class-admin-reports.php:27
+msgid "Price Record"
+msgstr ""
+
+#: includes/class-admin-reports.php:28
+msgid "Price Records"
+msgstr ""
+
+#: includes/class-admin-reports.php:35
+msgid "Product"
+msgstr ""
+
+#: includes/class-admin-reports.php:36
+msgid "Price"
+msgstr ""
+
+#: includes/class-admin-reports.php:37
+msgid "Date Recorded"
+msgstr ""
+
+#: includes/class-admin-reports.php:57
+msgid "Product not found (ID: %d)"
+msgstr ""
+
+#: includes/class-admin-reports.php:119 includes/class-admin-reports.php:132
+msgid "Price History Report"
+msgstr ""
+
+#: includes/class-admin-reports.php:120 includes/class-admin-settings.php:15
+#: includes/class-display-handler.php:137
+#: includes/class-display-handler.php:166
 msgid "Price History"
 msgstr ""
 
-#: includes/class-admin-settings.php:16
-msgid "Compliance Settings"
-msgstr ""
-
-#: includes/class-admin-settings.php:18
-msgid "Settings for displaying the lowest price as per EU Omnibus Directive."
+#: includes/class-admin-reports.php:142
+msgid "Search by Product ID"
 msgstr ""
 
 #: includes/class-admin-settings.php:22
-msgid "Enable 30-Day Lowest Price Message"
+msgid "Compliance Settings"
+msgstr ""
+
+#: includes/class-admin-settings.php:24
+msgid "Settings for displaying the lowest price as per EU Omnibus Directive."
 msgstr ""
 
 #: includes/class-admin-settings.php:28
+msgid "Enable 30-Day Lowest Price Message"
+msgstr ""
+
+#: includes/class-admin-settings.php:34
 msgid "Message Text"
 msgstr ""
 
 #. translators: %s is a placeholder for the price value
 
-#: includes/class-admin-settings.php:30
+#: includes/class-admin-settings.php:36
 msgid "Customize the text. Use %s as a placeholder for the price."
 msgstr ""
 
-#: includes/class-admin-settings.php:38
+#: includes/class-admin-settings.php:44
 msgid "Custom Period (Days)"
 msgstr ""
 
-#: includes/class-admin-settings.php:39
+#: includes/class-admin-settings.php:45
 msgid "Number of days to track for lowest price (default: 30)"
 msgstr ""
 
-#: includes/class-admin-settings.php:51
+#: includes/class-admin-settings.php:57
 msgid "Law/Compliance Tooltip"
 msgstr ""
 
-#: includes/class-admin-settings.php:52
+#: includes/class-admin-settings.php:58
 msgid "Optional: Add legal/compliance information to show as tooltip next to sale prices. Leave empty to disable."
 msgstr ""
 
-#: includes/class-admin-settings.php:66
+#: includes/class-admin-settings.php:72
 msgid "Price Chart Settings"
 msgstr ""
 
-#: includes/class-admin-settings.php:71
+#: includes/class-admin-settings.php:77
 msgid "Enable Price History Chart"
+msgstr ""
+
+#: wc-price-history-compliance.php:113
+msgid "WooCommerce Price History & Sale Compliance"
+msgstr ""
+
+#: wc-price-history-compliance.php:115
+msgid "requires WooCommerce to be installed and active."
 msgstr ""
 #. Plugin Name of the plugin/theme
 msgid "WooCommerce Price History & Sale Compliance"

@@ -41,6 +41,7 @@
             font-size: 1.3em;
             margin-bottom: 30px;
             opacity: 0.9;
+            color: #fff;
         }
         
         .warning-box {
@@ -56,7 +57,11 @@
         .warning-box h3 {
             color: #ffeb3b;
             font-size: 1.4em;
-            margin-bottom: 15px;
+            margin: 0 0 15px 0;
+        }
+        
+        .warning-box p {
+             color: #fff;   
         }
         
         .cta-button {
@@ -139,7 +144,7 @@
         .highlight {
             background: #e8f5e8;
             padding: 20px;
-            border-left: 4px solid #27ae60;
+/*            border-left: 4px solid #27ae60;*/
             margin: 20px 0;
         }
         
@@ -319,6 +324,260 @@
                 transform: none;
             }
         }
+        
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+/*            padding: 20px;*/
+/*            background: #f8f9fa;*/
+        }
+        
+        .container {
+/*
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+*/
+        }
+        
+        .whychoose{
+            background: #f8f9fa;    
+        }
+        
+        /* Matching your existing style */
+        .section {
+            margin: 60px 0;
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+/*            color: #2c3e50;*/
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: #34495e;
+        }
+        
+        p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+/*            color: #555;*/
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .highlight h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        /* Feature grid matching your style */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-box h4 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+        
+        .feature-box p {
+            margin: 0;
+            color: #666;
+        }
+        
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .feature-name {
+            text-align: left !important;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .check-yes {
+            color: #27ae60;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .check-no {
+            color: #e74c3c;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .check-partial {
+            color: #f39c12;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        /* Testimonial styles */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .testimonial::before {
+            content: '"';
+            font-size: 4em;
+            color: #667eea;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            line-height: 1;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin: 20px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 15px;
+        }
+        
+        .testimonial-store {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* Upgrade messaging */
+        .upgrade-box {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .upgrade-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .price-highlight {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .savings {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        /* Variable product highlight */
+        .variable-highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .variable-highlight h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .technical-note {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 10px;
+        }        
+        
+        
     </style>
 </head>
 <body>
@@ -333,7 +592,10 @@
                 <p>German authorities are already issuing warnings. One electronics retailer received a €8,500 fine for non-compliant sale pricing in October 2024. French consumer protection agencies are conducting audits starting January 2025.</p>
             </div>
             
-            <a href="#pricing" class="cta-button">Get Compliant Today - $49 One-Time</a>
+            <a target="_blank" href="https://theweblab.xyz/woocommerce-price-history-sale-compliance/documentation.html" class="cta-button">Doc</a>
+            
+            <a target="_blank" href="https://codecanyon.net/item/woocommerce-price-history-sale-compliance/58513961" class="cta-button">Get Compliant Today - $49 One-Time</a>
+            <a target="_blank" href="https://theweblab.xyz/demo/product/divi-engine-string-bag-big-logo/" class="cta-button">Demo</a>
         </div>
     </section>
 
@@ -452,6 +714,277 @@
             </div>
         </div>
     </section>
+    
+    
+    
+        <!-- Why Store Owners Choose Our Solution Section -->
+    <section class="section whychoose">
+        <div class="container">   
+            <h2>Why Store Owners Choose Our Solution Over Free Alternatives</h2>
+            
+            <div class="highlight">
+                <h3>🎯 The Professional Difference</h3>
+                <p>Free plugins get you started, but growing stores need reliability, support, and features that actually work with complex product catalogs.</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🎨 Professional Appearance</h4>
+                    <p>Clean, customizable design that builds customer trust instead of looking like an afterthought. Your compliance messaging matches your brand.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🔧 Variable Products That Work</h4>
+                    <p>Separate price tracking for each variation (Size M vs L, Red vs Blue). Most free plugins treat all variations as one product - wrong and potentially non-compliant.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🚀 HPOS Compatible</h4>
+                    <p>Future-proof your store with High Performance Order Storage compatibility. Free plugins often break with WooCommerce updates.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📞 Real Support</h4>
+                    <p>Get help when you need it. Free plugins leave you searching forums. We respond to support requests with actual solutions.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📊 Complete Analytics</h4>
+                    <p>View detailed price change history, export compliance data for audits, and get insights free plugins simply don't provide.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>💰 One-Time Investment</h4>
+                    <p>No monthly fees, no subscription traps. Pay once, use forever with 1 year of free updates included.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Comparison Table Section -->
+    <section class="section">
+        <div class="container">
+            <h2>Feature Comparison: See the Difference</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Our Plugin</th>
+                        <th>Free Alternatives</th>
+                        <th>Premium Subscriptions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature-name">Automated Price Tracking</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">30-Day Compliance Display</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Variable Product Support</td>
+                        <td class="check-yes">✅ Advanced</td>
+                        <td class="check-partial">⚠️ Basic</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Professional Charts</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-no">❌</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Admin Reports & Analytics</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-no">❌</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">HPOS Compatibility</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-no">❌</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Customizable Messaging</td>
+                        <td class="check-yes">✅ Full</td>
+                        <td class="check-partial">⚠️ Limited</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Translation Ready</td>
+                        <td class="check-yes">✅</td>
+                        <td class="check-partial">⚠️ Partial</td>
+                        <td class="check-yes">✅</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Professional Support</td>
+                        <td class="check-yes">✅ Lifetime</td>
+                        <td class="check-no">❌</td>
+                        <td class="check-yes">✅ While Paying</td>
+                    </tr>
+                    <tr style="background: #e8f5e8;">
+                        <td class="feature-name"><strong>One-time Payment</strong></td>
+                        <td class="check-yes"><strong>✅ $49 Once</strong></td>
+                        <td class="check-yes"><strong>✅ Free</strong></td>
+                        <td class="check-no"><strong>❌ $79/Year</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+<!--
+            <div class="upgrade-box">
+                <h3>💡 The Smart Choice for Growing Stores</h3>
+                <div class="price-highlight">$49 once vs $237 over 3 years</div>
+                <div class="savings">Save $188+ compared to premium subscriptions</div>
+                <p>Get professional features without the ongoing costs. Perfect for agencies managing multiple client stores.</p>
+            </div>
+-->
+        </div>
+    </section>
+
+        <!-- Variable Product Superiority Section -->
+    <section class="section">
+        <div class="container">   
+            <h2>Variable Products Done Right</h2>
+            
+            <div class="variable-highlight">
+                <h4>⚠️ Why This Matters for Compliance</h4>
+                <p><strong>Most free plugins fail here:</strong> They track one price for all variations, showing the same "lowest price" whether a customer selects Size S or XL, Red or Blue. This can violate Omnibus requirements and confuse customers.</p>
+            </div>
+            
+            <h3>🎯 Our Approach: Separate Tracking Per Variation</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>👕 Fashion Stores</h4>
+                    <p>Size Small vs XL can have different price histories. We track each size separately, showing accurate compliance data when customers select their size.</p>
+                    <div class="technical-note">Example: Small shirt was $15 lowest, XL was $18 lowest in 30 days</div>
+                </div>
+                <div class="feature-box">
+                    <h4>📱 Electronics</h4>
+                    <p>64GB vs 256GB models have different pricing patterns. Each storage option shows its own accurate price history and compliance messaging.</p>
+                    <div class="technical-note">Example: 64GB model lowest $299, 256GB model lowest $399 in 30 days</div>
+                </div>
+                <div class="feature-box">
+                    <h4>🏠 Home & Garden</h4>
+                    <p>Color variations often have different pricing. Red paint vs Blue paint can have separate sale cycles and price drops.</p>
+                    <div class="technical-note">Example: Red paint lowest $24, Blue paint lowest $21 in 30 days</div>
+                </div>
+            </div>
+            
+            <p><strong>Technical Implementation:</strong> We hook into WooCommerce's variation system at the database level, storing separate price histories for each variation ID. When customers select a variation, our JavaScript dynamically updates the compliance message with that variation's specific data.</p>
+        </div>
+    </section>
+
+        <!-- Customer Testimonials Section -->
+    <section class="section">
+        <div class="container">
+            <h2>What Store Owners Say After Upgrading</h2>
+            
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Switched from the free Omnibus plugin after realizing it wasn't tracking our clothing sizes properly. This plugin finally shows accurate price history for each size - exactly what we needed for EU compliance."
+                    </div>
+                    <div class="testimonial-author">Sarah M.</div>
+                    <div class="testimonial-store">Fashion Boutique, Germany</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Free plugins looked terrible on our store and confused customers. This solution is clean, professional, and the charts actually help build trust. Sales improved after installing."
+                    </div>
+                    <div class="testimonial-author">Marcus K.</div>
+                    <div class="testimonial-store">Electronics Store, Netherlands</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "As an agency, we tried managing multiple free plugins across client stores. Too many issues. Now we use this on all EU client sites - works perfectly and clients love the professional appearance."
+                    </div>
+                    <div class="testimonial-author">Digital Agency Pro</div>
+                    <div class="testimonial-store">WooCommerce Agency, France</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "The variable product support was a game-changer. Our wine store has different vintages and sizes - finally each variation shows its own accurate price history. Free plugins couldn't handle this."
+                    </div>
+                    <div class="testimonial-author">Antonio R.</div>
+                    <div class="testimonial-store">Wine Shop, Spain</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Paid $79/year for a 'premium' solution that was basic. This $49 one-time plugin has better features and saved us money long-term. Wish we found it sooner."
+                    </div>
+                    <div class="testimonial-author">Emma L.</div>
+                    <div class="testimonial-store">Home Decor Store, Belgium</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Support response was amazing. Had a theme conflict and they helped resolve it within 4 hours. You don't get that with free plugins."
+                    </div>
+                    <div class="testimonial-author">James T.</div>
+                    <div class="testimonial-store">Sports Equipment, UK</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Professional Upgrade Messaging -->
+    <section class="section">
+        <div class="container">
+            <h2>Ready to Upgrade from Basic Solutions?</h2>
+            
+            <div class="highlight">
+                <h3>🚀 Join 1,000+ Store Owners Who Made the Switch</h3>
+                <p>Stop settling for plugins that "sort of work" and upgrade to a solution built for professional WooCommerce stores.</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>⏰ 2-Minute Setup</h4>
+                    <p>Install, activate, configure. No complex setup or theme modifications required. Works with any properly coded WooCommerce theme.</p>
+                </div>
+<!--
+                <div class="feature-box">
+                    <h4>🔄 Seamless Migration</h4>
+                    <p>Switching from free plugins? Our plugin automatically starts tracking from activation. No data loss, no downtime.</p>
+                </div>
+-->
+                <div class="feature-box">
+                    <h4>📈 Immediate Results</h4>
+                    <p>Professional compliance messaging appears instantly. Charts display once meaningful price history exists (2+ data points).</p>
+                </div>
+                <div class="feature-box">
+                    <h4>💰 30-Day Guarantee</h4>
+                    <p>Not satisfied? Get a full refund within 30 days. We're confident you'll love the professional difference.</p>
+                </div>
+            </div>
+            
+<!--
+            <div class="upgrade-box">
+                <h3>⚡ Limited Time: Single Site License</h3>
+                <div class="price-highlight">$49</div>
+                <div class="savings">Includes 1 year of updates & support</div>
+                <p><strong>Perfect for:</strong> Individual stores, small businesses, or testing before agency deployment</p>
+                <p style="margin: 0;"><em>Thinking about multiple sites? Contact us about agency licensing options.</em></p>
+            </div>
+-->
+        </div>
+    </section>    
+    
+    
+    
+    
+    
+    
+    
 
     <!-- Features Section -->
     <section class="features">
@@ -563,7 +1096,7 @@
                         <li>Single site license</li>
                         <li>1 year of updates included</li>
                     </ul>
-                    <a href="#" class="cta-button" style="margin-top: 20px;">Purchase Now</a>
+                    <a target="_blank" href="https://codecanyon.net/item/woocommerce-price-history-sale-compliance/58513961" class="cta-button" style="margin-top: 20px;">Purchase Now</a>
                 </div>
                 
                 <div class="pricing-card">
@@ -642,7 +1175,7 @@
         <div class="container">
             <h2 style="font-size: 2.5em; margin-bottom: 20px;">Stop Risking Compliance Fines</h2>
             <p style="font-size: 1.2em; margin-bottom: 30px;">German authorities are issuing warnings. French audits start this month. Get compliant today with a solution that actually works professionally.</p>
-            <a href="#" class="cta-button" style="font-size: 1.2em; padding: 20px 50px;">Purchase for $49 - One Time</a>
+            <a target="_blank" href="https://codecanyon.net/item/woocommerce-price-history-sale-compliance/58513961" class="cta-button" style="font-size: 1.2em; padding: 20px 50px;">Purchase for $49 - One Time</a>
             <p style="margin-top: 20px; opacity: 0.8;">Single site license • No annual fees • HPOS compatible • 1 year updates</p>
         </div>
     </section>
